@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: hireflow
+  namespace: argocd
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/DEVENDRA-5470/hireflow-gitops.git
+    targetRevision: main
+    path: k8s
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: hireflow
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=false
